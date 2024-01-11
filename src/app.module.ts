@@ -1,20 +1,20 @@
 /* istanbul ignore file */
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
-import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { UniversitiesModule } from './universities/universities.module';
 
 import configuration from './config/configuration';
+import { UniversitiesService } from './universities/universities.service';
 
 @Module({
 	imports: [
 		ConfigModule.forRoot({
 			load: [configuration],
 		}),
-		UniversitiesModule
+		UniversitiesModule,
 	],
-	controllers: [AppController],
-	providers: [AppService],
+	controllers: [],
+	providers: [AppService, UniversitiesService],
 })
 export class AppModule {}
