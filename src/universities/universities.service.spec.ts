@@ -1,4 +1,5 @@
 import { Test, TestingModule } from '@nestjs/testing';
+import { HttpService } from '@nestjs/axios';
 import { UniversitiesService } from './universities.service';
 
 describe('UniversitiesService', () => {
@@ -6,7 +7,15 @@ describe('UniversitiesService', () => {
 
 	beforeEach(async () => {
 		const module: TestingModule = await Test.createTestingModule({
-			providers: [UniversitiesService],
+			providers: [
+				UniversitiesService,
+				{
+					provide: HttpService,
+					useValue: {
+						post: jest.fn(),
+					},
+				},
+			],
 		}).compile();
 
 		service = module.get<UniversitiesService>(UniversitiesService);
