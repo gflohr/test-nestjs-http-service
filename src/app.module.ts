@@ -3,6 +3,7 @@ import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
+import { UniversitiesModule } from './universities/universities.module';
 
 import configuration from './config/configuration';
 
@@ -10,7 +11,8 @@ import configuration from './config/configuration';
 	imports: [
 		ConfigModule.forRoot({
 			load: [configuration],
-		})
+		}),
+		UniversitiesModule
 	],
 	controllers: [AppController],
 	providers: [AppService],
