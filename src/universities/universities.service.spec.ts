@@ -1,6 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { HttpService } from '@nestjs/axios';
 import { UniversitiesService } from './universities.service';
+import { ConfigService } from '@nestjs/config';
 
 describe('UniversitiesService', () => {
 	let service: UniversitiesService;
@@ -15,6 +16,7 @@ describe('UniversitiesService', () => {
 						post: jest.fn(),
 					},
 				},
+				ConfigService,
 			],
 		}).compile();
 

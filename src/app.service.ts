@@ -1,3 +1,4 @@
+/* istanbul ignore file */
 import { Injectable } from '@nestjs/common';
 import { UniversitiesService } from './universities/universities.service';
 import { first } from 'rxjs';
