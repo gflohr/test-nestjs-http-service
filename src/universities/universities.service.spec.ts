@@ -3,7 +3,7 @@ import { HttpService } from '@nestjs/axios';
 import { ConfigService } from '@nestjs/config';
 import { AxiosRequestHeaders } from 'axios';
 import { UniversitiesService } from './universities.service';
-import { of } from 'rxjs';
+import { Observer, of } from 'rxjs';
 import { University } from './university.interface';
 
 const MOCK_URL = 'http://localhost/whatever';
@@ -73,7 +73,7 @@ describe('UniversitiesService', () => {
 			})
 		);
 
-		const observer = {
+		const observer: Observer<University[]> = {
 			next: (universities: University[]) => {
 				expect(universities.length).toBe(2);
 				expect(universities[0].name).toBe('University of Lalaland');
