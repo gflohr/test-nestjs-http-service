@@ -5,12 +5,14 @@ import { AxiosRequestHeaders } from 'axios';
 import { UniversitiesService } from './universities.service';
 import { Observer, of } from 'rxjs';
 import { University } from './university.interface';
+import { TestScheduler } from 'rxjs/testing';
 
 const MOCK_URL = 'http://localhost/whatever';
 
 describe('UniversitiesService', () => {
 	let service: UniversitiesService;
 	let httpService: HttpService;
+	const testScheduler = new TestScheduler(() => {});
 
 	beforeEach(async () => {
 		const module: TestingModule = await Test.createTestingModule({
@@ -84,6 +86,8 @@ describe('UniversitiesService', () => {
 			},
 		};
 
-		service.findByCountry('Lalaland').subscribe(observer);
+		testScheduler.run(() => {
+			service.findByCountry('Lalaland').subscribe(observer);
+		});
 	});
 });
