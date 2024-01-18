@@ -7,10 +7,16 @@ import { first } from 'rxjs';
 export class AppService {
 	constructor(private universitiesService: UniversitiesService) {}
 
-	getUniversities(country: string): void {
-		this.universitiesService
-			.findByCountry(country)
-			.pipe(first())
-			.subscribe(console.log);
+	getUniversities(country: string): Promise<void> {
+		return new Promise((resolve, reject) => {
+			this.universitiesService
+				.findByCountry(country)
+				.pipe(first())
+				.subscribe({
+					next: console.log,
+					complete: () => resolve(),
+					error: (err) => reject(err),
+				});
+		});
 	}
 }
