@@ -1,10 +1,11 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { INestApplication } from '@nestjs/common';
-import { of } from 'rxjs';
+import { Observer, of } from 'rxjs';
 import { AppModule } from './../src/app.module';
 import { AppService } from './../src/app.service';
 import { UniversitiesService } from './../src/universities/universities.service';
 import { University } from './../src/universities/university.interface';
+import { TestScheduler } from 'rxjs/testing';
 
 describe('AppController (e2e)', () => {
 	let app: INestApplication;
@@ -12,6 +13,7 @@ describe('AppController (e2e)', () => {
 	const universitiesService = {
 		findByCountry: jest.fn(),
 	};
+	const testScheduler = new TestScheduler(() => {});
 
 	beforeEach(async () => {
 		const moduleFixture: TestingModule = await Test.createTestingModule({
@@ -56,10 +58,18 @@ describe('AppController (e2e)', () => {
 			.spyOn(global.console, 'log')
 			.mockImplementation(() => {});
 
-		await appService.getUniversities('Lalaland');
+		const observer: Observer<University[]> = {
+			next: () => {},
+			error: (error: any) => expect(error).toBeNull,
+			complete: () => {
+				expect(findByCountrySpy).toHaveBeenCalledTimes(1);
+				expect(logSpy).toHaveBeenCalledTimes(1);
+				expect(logSpy).toHaveBeenCalledWith(data);
+			},
+		};
 
-		expect(findByCountrySpy).toHaveBeenCalledTimes(1);
-		expect(logSpy).toHaveBeenCalledTimes(1);
-		expect(logSpy).toHaveBeenCalledWith(data);
+		testScheduler.run(() => {
+			appService.getUniversities('Lalaland').subscribe(observer);
+		});
 	});
 });
