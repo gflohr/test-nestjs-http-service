@@ -6,7 +6,11 @@ import { AppService } from './app.service';
 async function bootstrap() {
 	const app = await NestFactory.create(AppModule);
 	const appService = app.get(AppService);
-	await appService.getUniversities(process.argv[2]);
-	await app.close();
+	appService.getUniversities(process.argv[2])
+		.subscribe({
+			next: () => {},
+			error: console.error,
+			complete: () => app.close(),
+		});
 }
 bootstrap();

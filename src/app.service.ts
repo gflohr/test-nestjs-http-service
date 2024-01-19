@@ -1,22 +1,18 @@
 /* istanbul ignore file */
 import { Injectable } from '@nestjs/common';
 import { UniversitiesService } from './universities/universities.service';
-import { first } from 'rxjs';
+import { Observable, first, tap } from 'rxjs';
+import { University } from './universities/university.interface';
 
 @Injectable()
 export class AppService {
 	constructor(private universitiesService: UniversitiesService) {}
 
-	getUniversities(country: string): Promise<void> {
-		return new Promise((resolve, reject) => {
-			this.universitiesService
-				.findByCountry(country)
-				.pipe(first())
-				.subscribe({
-					next: console.log,
-					complete: () => resolve(),
-					error: (err) => reject(err),
-				});
-		});
+	getUniversities(country: string): Observable<University[]> {
+		return this.universitiesService
+			.findByCountry(country)
+			.pipe(
+				tap(console.log)
+			);
 	}
 }
