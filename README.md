@@ -5,8 +5,7 @@
 This repository shows how to test the
 [NestJS](https://github.com/nestjs/nest) `HttpService` with
 [Jest](https://jestjs.io/).  It is a companion repository to the blog post
-["Navigating the Testing Maze: Pitfalls in Testing NestJS Modules with the @nestjs/axios HttpService"](http://www.guido-flohr.net/testing-the-nestjs-http-service)
-(not yet published).
+["Pitfalls in Testing NestJS Modules with the @nestjs/axios HttpService"](http://www.guido-flohr.net/testing-the-nestjs-http-service).
 
 ## Installation
 
